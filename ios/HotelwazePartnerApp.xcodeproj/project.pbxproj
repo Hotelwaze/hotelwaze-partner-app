@@ -8,12 +8,16 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* HotelwazePartnerAppTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* HotelwazePartnerAppTests.m */; };
+		112AA97A2744438A936A262D /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CA57C483FF88414C8AE6F10D /* Montserrat-SemiBold.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		1C130CE036718BEBF27B302E /* libPods-HotelwazePartnerApp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCE5C044C05508801F3CD596 /* libPods-HotelwazePartnerApp.a */; };
 		4874679436D38C0C7867A61D /* libPods-HotelwazePartnerApp-HotelwazePartnerAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C4C250EF3F10FBC78153CB98 /* libPods-HotelwazePartnerApp-HotelwazePartnerAppTests.a */; };
+		54D183013FA14A9C96AEFC2E /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = EDA9A9B25D074503B5B5F746 /* Montserrat-Medium.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		9E1DA73476F94AA895A6DA4F /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 20B7A6DB637C41F98D8429D9 /* Montserrat-Regular.ttf */; };
+		E23B4821BBB54B02B7205EA5 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C33DE0E24B4453597EBC994 /* Montserrat-Bold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,12 +41,16 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = HotelwazePartnerApp/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = HotelwazePartnerApp/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = HotelwazePartnerApp/main.m; sourceTree = "<group>"; };
+		20B7A6DB637C41F98D8429D9 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Regular.ttf"; path = "../src/assets/fonts/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		34239499100E3218B70141E7 /* Pods-HotelwazePartnerApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotelwazePartnerApp.debug.xcconfig"; path = "Target Support Files/Pods-HotelwazePartnerApp/Pods-HotelwazePartnerApp.debug.xcconfig"; sourceTree = "<group>"; };
+		3C33DE0E24B4453597EBC994 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Bold.ttf"; path = "../src/assets/fonts/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		4C95D4419EB5C633AEB8F973 /* Pods-HotelwazePartnerApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotelwazePartnerApp.release.xcconfig"; path = "Target Support Files/Pods-HotelwazePartnerApp/Pods-HotelwazePartnerApp.release.xcconfig"; sourceTree = "<group>"; };
 		59DFEE4537AD523E6710E1BF /* Pods-HotelwazePartnerApp-HotelwazePartnerAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HotelwazePartnerApp-HotelwazePartnerAppTests.release.xcconfig"; path = "Target Support Files/Pods-HotelwazePartnerApp-HotelwazePartnerAppTests/Pods-HotelwazePartnerApp-HotelwazePartnerAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = HotelwazePartnerApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C4C250EF3F10FBC78153CB98 /* libPods-HotelwazePartnerApp-HotelwazePartnerAppTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HotelwazePartnerApp-HotelwazePartnerAppTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA57C483FF88414C8AE6F10D /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-SemiBold.ttf"; path = "../src/assets/fonts/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		EDA9A9B25D074503B5B5F746 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Montserrat-Medium.ttf"; path = "../src/assets/fonts/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		FCE5C044C05508801F3CD596 /* libPods-HotelwazePartnerApp.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-HotelwazePartnerApp.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -122,6 +130,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D20EA96C0425653065F31992 /* Pods */,
+				E3DC605BFAB848298B4F9D88 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -147,6 +156,18 @@
 			);
 			name = Pods;
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		E3DC605BFAB848298B4F9D88 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				3C33DE0E24B4453597EBC994 /* Montserrat-Bold.ttf */,
+				EDA9A9B25D074503B5B5F746 /* Montserrat-Medium.ttf */,
+				20B7A6DB637C41F98D8429D9 /* Montserrat-Regular.ttf */,
+				CA57C483FF88414C8AE6F10D /* Montserrat-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -245,6 +266,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				E23B4821BBB54B02B7205EA5 /* Montserrat-Bold.ttf in Resources */,
+				54D183013FA14A9C96AEFC2E /* Montserrat-Medium.ttf in Resources */,
+				9E1DA73476F94AA895A6DA4F /* Montserrat-Regular.ttf in Resources */,
+				112AA97A2744438A936A262D /* Montserrat-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
