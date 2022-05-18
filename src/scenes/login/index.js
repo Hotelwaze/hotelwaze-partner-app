@@ -110,12 +110,12 @@ const TermsPrivacyMessage = styled.Text`
   text-align: center;
   color: #ffffff;
   width: 100%;
-  text-decoration: underline;
   margin-bottom: 12px;
 `;
 
 const Hyperlink = styled.Text`
   text-decoration: ${({pressed}) => (pressed ? 'none' : 'underline')};
+  text-decoration-color: #ffffff;
 `;
 
 const LoginButton = styled.Pressable`
@@ -140,6 +140,7 @@ const LoginButtonLabel = styled.Text`
 
 const ForgotPasswordButton = styled.Pressable`
   align-self: center;
+  margin-bottom: 12px;
 `;
 
 const ForgotPasswordButtonBackground = styled.View``;
@@ -149,7 +150,18 @@ const ForgotPasswordButtonLabel = styled.Text`
   font-size: 14px;
   line-height: 18px;
   text-decoration: ${({pressed}) => (pressed ? 'none' : 'underline')};
+  text-decoration-color: #ffffff;
   color: #ffffff;
+`;
+
+const NoAccountMessage = styled.Text`
+  font-family: 'Montserrat-Regular';
+  font-size: 14px;
+  line-height: 18px;
+  text-align: center;
+  color: #ffffff;
+  width: 100%;
+  margin-bottom: 12px;
 `;
 
 const LoginScreen = ({navigation}) => (
@@ -235,6 +247,14 @@ const LoginScreen = ({navigation}) => (
           </ForgotPasswordButtonBackground>
         )}
       </ForgotPasswordButton>
+      <NoAccountMessage>No account yet?
+        Register at <Hyperlink
+          onPress={() => {
+            Linking.openURL('https://hotelwaze.com/partners').then(r => {});
+          }}>
+          hotelwaze.com/partners
+        </Hyperlink>
+      </NoAccountMessage>
     </LoginContainer>
   </Wrapper>
 );
