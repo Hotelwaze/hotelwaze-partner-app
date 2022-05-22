@@ -1,7 +1,11 @@
 import React from 'react';
 import styled from 'styled-components/native';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
-import {Linking} from 'react-native';
+import * as Keychain from 'react-native-keychain';
+import { useForm, Controller } from 'react-hook-form';
+import * as yup from 'yup';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import { Linking } from 'react-native';
 
 const Wrapper = styled.ImageBackground`
   flex: 1;
@@ -114,7 +118,7 @@ const TermsPrivacyMessage = styled.Text`
 `;
 
 const Hyperlink = styled.Text`
-  text-decoration: ${({pressed}) => (pressed ? 'none' : 'underline')};
+  text-decoration: ${({ pressed }) => (pressed ? 'none' : 'underline')};
   text-decoration-color: #ffffff;
 `;
 
@@ -125,7 +129,7 @@ const LoginButton = styled.Pressable`
 
 const LoginButtonBackground = styled.View`
   border: 1px solid #f61a88;
-  background-color: ${({pressed}) => (pressed ? '#dd177a' : '#F61a88')};
+  background-color: ${({ pressed }) => (pressed ? '#dd177a' : '#F61a88')};
   border-radius: 4px;
   padding: 12px;
 `;
@@ -149,7 +153,7 @@ const ForgotPasswordButtonLabel = styled.Text`
   font-family: 'Montserrat-Regular';
   font-size: 14px;
   line-height: 18px;
-  text-decoration: ${({pressed}) => (pressed ? 'none' : 'underline')};
+  text-decoration: ${({ pressed }) => (pressed ? 'none' : 'underline')};
   text-decoration-color: #ffffff;
   color: #ffffff;
 `;
@@ -164,7 +168,7 @@ const NoAccountMessage = styled.Text`
   margin-bottom: 12px;
 `;
 
-const LoginScreen = ({navigation}) => (
+const LoginScreen = ({ navigation }) => (
   <Wrapper
     source={require('../../assets/images/login-bg.jpg')}
     resizeMode="cover">
@@ -231,7 +235,7 @@ const LoginScreen = ({navigation}) => (
         .
       </TermsPrivacyMessage>
       <LoginButton onPress={() => console.warn('Log in')}>
-        {({pressed}) => (
+        {({ pressed }) => (
           <LoginButtonBackground pressed={pressed}>
             <LoginButtonLabel>Log in</LoginButtonLabel>
           </LoginButtonBackground>
@@ -239,7 +243,7 @@ const LoginScreen = ({navigation}) => (
       </LoginButton>
       <ForgotPasswordButton
         onPress={() => navigation.navigate('ForgotPassword')}>
-        {({pressed}) => (
+        {({ pressed }) => (
           <ForgotPasswordButtonBackground pressed={pressed}>
             <ForgotPasswordButtonLabel pressed={pressed}>
               Forgot password?
@@ -247,8 +251,9 @@ const LoginScreen = ({navigation}) => (
           </ForgotPasswordButtonBackground>
         )}
       </ForgotPasswordButton>
-      <NoAccountMessage>No account yet?
-        Register at <Hyperlink
+      <NoAccountMessage>
+        No account yet? Register at{' '}
+        <Hyperlink
           onPress={() => {
             Linking.openURL('https://hotelwaze.com/partners').then(r => {});
           }}>

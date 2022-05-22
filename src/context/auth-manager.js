@@ -1,11 +1,11 @@
-import React, {createContext, useState} from 'react';
+import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Keychain from 'react-native-keychain';
 
 const AuthContext = createContext(null);
-const {Provider} = AuthContext;
+const { Provider } = AuthContext;
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
   const [authState, setAuthState] = useState({
     user: null,
     accessToken: null,
@@ -46,4 +46,4 @@ AuthProvider.defaultProps = {
   children: null,
 };
 
-export {AuthContext, AuthProvider};
+export { AuthContext, AuthProvider };

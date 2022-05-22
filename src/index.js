@@ -1,7 +1,7 @@
 import React from 'react';
-import {NavigationContainer} from '@react-navigation/native';
+import { NavigationContainer } from '@react-navigation/native';
 import RootNavigator from './navigations';
-import {library} from '@fortawesome/fontawesome-svg-core';
+import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faAt as farAt,
   faLock as farLock,
@@ -15,7 +15,7 @@ import {
   faPeopleGroup as fasPeopleGroup,
 } from '@fortawesome/pro-solid-svg-icons';
 
-import {AuthProvider} from './context/auth-manager';
+import { AuthProvider } from './context/auth-manager';
 
 library.add(
   farAt,
