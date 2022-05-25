@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components/native';
 import * as Keychain from 'react-native-keychain';
 import { useForm, Controller } from 'react-hook-form';
@@ -6,6 +6,9 @@ import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { Linking } from 'react-native';
+import { AuthContext } from '../../context/auth-manager';
+import { AxiosContext } from '../../context/axios-manager';
+import jwtDecode from 'jwt-decode';
 
 const Wrapper = styled.ImageBackground`
   flex: 1;
@@ -168,100 +171,207 @@ const NoAccountMessage = styled.Text`
   margin-bottom: 12px;
 `;
 
-const LoginScreen = ({ navigation }) => (
-  <Wrapper
-    source={require('../../assets/images/login-bg.jpg')}
-    resizeMode="cover">
-    <Heading>
-      <Headline>Lorem Ipsum</Headline>
-      <Subhead>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-      </Subhead>
-    </Heading>
-    <BrandLogo
-      source={require('../../assets/images/hotelwaze-partner-logo.png')}
-    />
-    <LoginContainer>
-      <LoginTitle>Log in</LoginTitle>
-      <FormField>
-        <FormInputGroup>
-          <IconLeft>
-            <FontAwesomeIcon icon={['far', 'at']} size={20} color="#a6a6a6" />
-          </IconLeft>
-          <FormInputIconLeft
-            editable
-            keyboardType="email-address"
-            autoCapitalize="none"
-            placeholder="Enter your email address"
+const LoginScreen = ({ navigation }) => {
+  const authContext = useContext(AuthContext);
+  const { publicAxios } = useContext(AxiosContext);
+  const [passwordHidden, setPasswordHidden] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+
+  const validationSchema = yup.object().shape({
+    email: yup
+      .string()
+      .required('Enter your email.')
+      .email('Email must be in a valid format.'),
+    password: yup.string().required('Enter your password.'),
+  });
+
+  const formOptions = {
+    mode: 'onBlur',
+    resolver: yupResolver(validationSchema),
+  };
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm(formOptions);
+
+  const handleLogin = async data => {
+    try {
+      setIsSubmitting(true);
+      setErrorMessage(null);
+      setSuccessMessage(null);
+
+      const response = await publicAxios.post('/auth/login', {
+        email: data.email,
+        password: data.password,
+      });
+
+      const { user: userToken, refreshToken } = response.data.data;
+
+      await authContext.updateAuthState({
+        user: jwtDecode(userToken, { body: true }),
+        accessToken: userToken,
+        refreshToken,
+        authenticated: true,
+      });
+
+      await Keychain.setGenericPassword(
+        'token',
+        JSON.stringify({
+          user: jwtDecode(userToken, { body: true }),
+          accessToken: userToken,
+          refreshToken,
+        }),
+      );
+      setTimeout(() => {
+        navigation.navigate('AppStack');
+      }, 1000);
+    } catch (error) {
+      setIsSubmitting(false);
+      setErrorMessage(error.response.data.message);
+      setSuccessMessage(null);
+    }
+  };
+
+  const showHidePassword = () => {
+    setPasswordHidden(!passwordHidden);
+  };
+
+  useEffect(() => {
+    console.log(authContext?.authState);
+  });
+
+  return (
+    <Wrapper
+      source={require('../../assets/images/login-bg.jpg')}
+      resizeMode="cover">
+      <Heading>
+        <Headline>Lorem Ipsum</Headline>
+        <Subhead>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+        </Subhead>
+      </Heading>
+      <BrandLogo
+        source={require('../../assets/images/hotelwaze-partner-logo.png')}
+      />
+      <LoginContainer>
+        <LoginTitle>Log in</LoginTitle>
+        <FormField>
+          <Controller
+            control={control}
+            name="email"
+            render={({ field: { onChange, value, onBlur } }) => (
+              <FormInputGroup>
+                <IconLeft>
+                  <FontAwesomeIcon
+                    icon={['far', 'at']}
+                    size={20}
+                    color="#a6a6a6"
+                  />
+                </IconLeft>
+                <FormInputIconLeft
+                  editable={!isSubmitting}
+                  keyboardType="email-address"
+                  autoCapitalize="none"
+                  onChangeText={val => onChange(val)}
+                  value={value}
+                  onBlur={onBlur}
+                  blurOnSubmit
+                  isValid={isValid}
+                  placeholder="Enter your email address"
+                />
+              </FormInputGroup>
+            )}
           />
-        </FormInputGroup>
-      </FormField>
-      <FormField>
-        <FormInputGroup>
-          <IconLeft>
-            <FontAwesomeIcon icon={['far', 'lock']} size={20} color="#a6a6a6" />
-          </IconLeft>
-          <FormInputIconLeftButtonRight
-            editable
-            secureTextEntry={true}
-            placeholder="Enter your password"
+        </FormField>
+        <FormField>
+          <Controller
+            control={control}
+            name="password"
+            render={({ field: { onChange, value, onBlur } }) => (
+              <FormInputGroup>
+                <IconLeft>
+                  <FontAwesomeIcon
+                    icon={['far', 'lock']}
+                    size={20}
+                    color="#a6a6a6"
+                  />
+                </IconLeft>
+                <FormInputIconLeftButtonRight
+                  editable={!isSubmitting}
+                  secureTextEntry={passwordHidden}
+                  placeholder="Enter your password"
+                  onChangeText={val => onChange(val)}
+                  value={value}
+                  onBlur={onBlur}
+                  blurOnSubmit
+                />
+                <ButtonRight onPress={() => showHidePassword()}>
+                  <ButtonRightBg>
+                    <FontAwesomeIcon
+                      icon={['far', `${passwordHidden ? 'eye-slash' : 'eye'}`]}
+                      size={20}
+                      color="#595959"
+                    />
+                  </ButtonRightBg>
+                </ButtonRight>
+              </FormInputGroup>
+            )}
           />
-          <ButtonRight>
-            <ButtonRightBg>
-              <FontAwesomeIcon
-                icon={['far', 'eye-slash']}
-                size={20}
-                color="#595959"
-              />
-            </ButtonRightBg>
-          </ButtonRight>
-        </FormInputGroup>
-      </FormField>
-      <TermsPrivacyMessage>
-        By logging in, you agree to Hotelwaze&apos;s{' '}
-        <Hyperlink
-          onPress={() => {
-            Linking.openURL('https://hotelwaze.com/terms').then(r => {});
-          }}>
-          terms
-        </Hyperlink>{' '}
-        and{' '}
-        <Hyperlink
-          onPress={() => {
-            Linking.openURL('https://hotelwaze.com/privacy').then(r => {});
-          }}>
-          privacy policy
-        </Hyperlink>
-        .
-      </TermsPrivacyMessage>
-      <LoginButton onPress={() => console.warn('Log in')}>
-        {({ pressed }) => (
-          <LoginButtonBackground pressed={pressed}>
-            <LoginButtonLabel>Log in</LoginButtonLabel>
-          </LoginButtonBackground>
-        )}
-      </LoginButton>
-      <ForgotPasswordButton
-        onPress={() => navigation.navigate('ForgotPassword')}>
-        {({ pressed }) => (
-          <ForgotPasswordButtonBackground pressed={pressed}>
-            <ForgotPasswordButtonLabel pressed={pressed}>
-              Forgot password?
-            </ForgotPasswordButtonLabel>
-          </ForgotPasswordButtonBackground>
-        )}
-      </ForgotPasswordButton>
-      <NoAccountMessage>
-        No account yet? Register at{' '}
-        <Hyperlink
-          onPress={() => {
-            Linking.openURL('https://hotelwaze.com/partners').then(r => {});
-          }}>
-          hotelwaze.com/partners
-        </Hyperlink>
-      </NoAccountMessage>
-    </LoginContainer>
-  </Wrapper>
-);
+        </FormField>
+        <TermsPrivacyMessage>
+          By logging in, you agree to Hotelwaze&apos;s{' '}
+          <Hyperlink
+            onPress={() => {
+              Linking.openURL('https://hotelwaze.com/terms').then(r => {});
+            }}>
+            terms
+          </Hyperlink>{' '}
+          and{' '}
+          <Hyperlink
+            onPress={() => {
+              Linking.openURL('https://hotelwaze.com/privacy').then(r => {});
+            }}>
+            privacy policy
+          </Hyperlink>
+          .
+        </TermsPrivacyMessage>
+        <LoginButton
+          onPress={handleSubmit(handleLogin)}
+          disabled={isSubmitting}>
+          {({ pressed }) => (
+            <LoginButtonBackground pressed={pressed}>
+              <LoginButtonLabel>
+                {isSubmitting ? 'Logging in...' : 'Log in'}
+              </LoginButtonLabel>
+            </LoginButtonBackground>
+          )}
+        </LoginButton>
+        <ForgotPasswordButton
+          onPress={() => navigation.navigate('ForgotPassword')}>
+          {({ pressed }) => (
+            <ForgotPasswordButtonBackground pressed={pressed}>
+              <ForgotPasswordButtonLabel pressed={pressed}>
+                Forgot password?
+              </ForgotPasswordButtonLabel>
+            </ForgotPasswordButtonBackground>
+          )}
+        </ForgotPasswordButton>
+        <NoAccountMessage>
+          No account yet? Register at{' '}
+          <Hyperlink
+            onPress={() => {
+              Linking.openURL('https://hotelwaze.com/partners').then(r => {});
+            }}>
+            hotelwaze.com/partners
+          </Hyperlink>
+        </NoAccountMessage>
+      </LoginContainer>
+    </Wrapper>
+  );
+};
 
 export default LoginScreen;

@@ -1,12 +1,13 @@
 import React, { createContext, useState } from 'react';
 import PropTypes from 'prop-types';
 import * as Keychain from 'react-native-keychain';
+import { usePersistStorage } from 'react-native-use-persist-storage';
 
 const AuthContext = createContext(null);
 const { Provider } = AuthContext;
 
 const AuthProvider = ({ children }) => {
-  const [authState, setAuthState] = useState({
+  const [authState, setAuthState, restored] = usePersistStorage('@AuthState', {
     user: null,
     accessToken: null,
     refreshToken: null,
@@ -15,7 +16,7 @@ const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     await Keychain.resetGenericPassword();
-    setAuthState({
+    await setAuthState({
       user: null,
       accessToken: null,
       refreshToken: null,
@@ -29,8 +30,9 @@ const AuthProvider = ({ children }) => {
     <Provider
       value={{
         authState,
+        updateAuthState: setAuthState,
+        restored,
         getAccessToken,
-        setAuthState,
         logout,
       }}>
       {children}

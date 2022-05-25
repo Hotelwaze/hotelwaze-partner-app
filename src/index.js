@@ -16,6 +16,7 @@ import {
 } from '@fortawesome/pro-solid-svg-icons';
 
 import { AuthProvider } from './context/auth-manager';
+import { AxiosProvider } from './context/axios-manager';
 
 library.add(
   farAt,
@@ -30,9 +31,11 @@ library.add(
 
 const App = () => (
   <AuthProvider>
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
+    <AxiosProvider>
+      <NavigationContainer>
+        <RootNavigator />
+      </NavigationContainer>
+    </AxiosProvider>
   </AuthProvider>
 );
 

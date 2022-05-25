@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import React, { useContext } from 'react';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '../scenes/login';
-import {AuthContext} from '../context/auth-manager';
+import { AuthContext } from '../context/auth-manager';
 import AppNavigator from './app-navigator';
 
 const Stack = createNativeStackNavigator();
@@ -11,7 +11,7 @@ const RootNavigator = () => {
 
   return (
     <Stack.Navigator>
-      {authContext?.authState?.authenticated === true ? (
+      {!authContext?.authState?.authenticated ? (
         <Stack.Screen
           name="Login"
           component={LoginScreen}
@@ -21,7 +21,7 @@ const RootNavigator = () => {
         />
       ) : (
         <Stack.Screen
-          name="App"
+          name="AppStack"
           component={AppNavigator}
           options={{
             headerShown: false,
