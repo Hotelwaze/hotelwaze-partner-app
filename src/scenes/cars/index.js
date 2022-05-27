@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import ToyotaVios from '../../assets/images/toyota-vios-orange.jpg';
 import styled from 'styled-components/native';
 import CarCard from '../../components/car-card';
+import httpService from '../../services/http';
+import { AuthContext } from '../../context/auth-manager';
+import { FlatList, Text } from 'react-native';
 
 const Wrapper = styled.SafeAreaView`
   flex: 1;
@@ -12,23 +15,59 @@ const WrapperInner = styled.View`
   padding: 24px;
 `;
 
+const LoadingWrapper = styled.View`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
 const CarsScreen = () => {
-  const car = {
-    image: 'toyota-vios-orange.jpg',
-    type: 'Economy Sedan',
-    make: 'Toyota',
-    model: 'Vios',
-    year: '2022',
-    plate: 'DCX 2222',
-    transmission: 'AT',
-    driver: 'driver optional',
+  const authContext = useContext(AuthContext);
+  const [loading, setLoading] = useState(false);
+  const [carList, setCarList] = useState([]);
+
+  useEffect(() => {
+    if (authContext?.restored) {
+      getCars(
+        authContext?.authState?.accessToken,
+        authContext?.authState?.user.PartnerId,
+      );
+    }
+  }, []);
+
+  const getCars = async (token, partnerId) => {
+    try {
+      setLoading(true);
+
+      const result = await httpService.getCars(token, partnerId);
+
+      if (result.status === 200) {
+        setLoading(false);
+        setCarList(result.data.data);
+        return;
+      }
+
+      throw new Error('Failed to fetch users');
+    } catch (e) {
+      setLoading(false);
+      console.log('Error: ', e.message);
+    }
   };
 
   return (
     <Wrapper>
-      <WrapperInner>
-        <CarCard car={car} />
-      </WrapperInner>
+      {loading ? (
+        <LoadingWrapper>
+          <Text>Loading cars...</Text>
+        </LoadingWrapper>
+      ) : (
+        <WrapperInner>
+          <FlatList
+            data={carList}
+            renderItem={({ item }) => <CarCard car={item} />}
+          />
+        </WrapperInner>
+      )}
     </Wrapper>
   );
 };
