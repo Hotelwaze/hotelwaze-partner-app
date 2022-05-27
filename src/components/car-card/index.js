@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import Config from 'react-native-config';
 import styled from 'styled-components/native';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
+import utils from '../../utils';
 
 const Wrapper = styled.Pressable`
   margin-bottom: 24px;
@@ -23,6 +25,8 @@ const ImageContainer = styled.View`
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
   overflow: hidden;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Image = styled.Image`
@@ -108,17 +112,36 @@ const CarOptionLabel = styled.Text`
 `;
 
 const CarCard = ({
-  car: { image, type, make, model, year, plate, transmission, driver },
+  car: {
+    image,
+    type,
+    make,
+    model,
+    year,
+    plate,
+    transmission,
+    driver,
+    pricePerDay,
+    driverFee,
+  },
 }) => {
   return (
     <Wrapper>
       <Card>
         <ImageContainer>
-          <Image
-            source={{
-              uri: `${Config.ASSETS_URL}${image}`,
-            }}
-          />
+          {image ? (
+            <Image
+              source={{
+                uri: `${Config.ASSETS_URL}${image}`,
+              }}
+            />
+          ) : (
+            <FontAwesomeIcon
+              icon={['fas', 'image-slash']}
+              size={48}
+              color="#597E9D"
+            />
+          )}
         </ImageContainer>
         <DetailsContainer>
           <CarType>{type}</CarType>
@@ -129,11 +152,11 @@ const CarCard = ({
           <RentalPriceMeta>
             <PriceRow>
               <PriceLabel>Rental Per Day:</PriceLabel>
-              <PriceValue>₱3000.00</PriceValue>
+              <PriceValue>{utils.currencyFormat(pricePerDay)}</PriceValue>
             </PriceRow>
             <PriceRow>
               <PriceLabel>Driver Per Day:</PriceLabel>
-              <PriceValue>₱1500.00</PriceValue>
+              <PriceValue>{utils.currencyFormat(driverFee)}</PriceValue>
             </PriceRow>
           </RentalPriceMeta>
           <CarOptions>

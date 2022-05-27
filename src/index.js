@@ -13,6 +13,7 @@ import {
   faCalendarLinesPen as fasCalendarLinesPen,
   faGauge as fasGauge,
   faPeopleGroup as fasPeopleGroup,
+  faImageSlash as fasImageSlash,
 } from '@fortawesome/pro-solid-svg-icons';
 
 import { AuthProvider } from './context/auth-manager';
@@ -27,6 +28,7 @@ library.add(
   fasCalendarLinesPen,
   fasGauge,
   fasPeopleGroup,
+  fasImageSlash,
 );
 
 const App = () => (
