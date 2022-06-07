@@ -21,7 +21,7 @@ const LoadingWrapper = styled.View`
   align-items: center;
 `;
 
-const CarsScreen = () => {
+const CarsScreen = ({ navigation }) => {
   const authContext = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
   const [carList, setCarList] = useState([]);
@@ -64,7 +64,13 @@ const CarsScreen = () => {
         <WrapperInner>
           <FlatList
             data={carList}
-            renderItem={({ item }) => <CarCard car={item} />}
+            renderItem={({ item }) => (
+              <CarCard
+                onPress={() => navigation.navigate('Car', { car: item })}
+                car={item}
+              />
+            )}
+            keyExtractor={(car, index) => index}
           />
         </WrapperInner>
       )}

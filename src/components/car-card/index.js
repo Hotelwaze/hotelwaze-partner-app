@@ -4,7 +4,7 @@ import styled from 'styled-components/native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import utils from '../../utils';
 
-const Wrapper = styled.Pressable`
+const Wrapper = styled.TouchableOpacity`
   margin-bottom: 24px;
 `;
 
@@ -123,10 +123,11 @@ const CarCard = ({
     driver,
     pricePerDay,
     driverFee,
+    onPress,
   },
 }) => {
   return (
-    <Wrapper>
+    <Wrapper onPress={onPress}>
       <Card>
         <ImageContainer>
           {image ? (

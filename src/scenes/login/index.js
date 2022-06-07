@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import styled from 'styled-components/native';
 import * as Keychain from 'react-native-keychain';
 import { useForm, Controller } from 'react-hook-form';
@@ -176,8 +177,6 @@ const LoginScreen = ({ navigation }) => {
   const { publicAxios } = useContext(AxiosContext);
   const [passwordHidden, setPasswordHidden] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null);
 
   const validationSchema = yup.object().shape({
     email: yup
@@ -201,8 +200,6 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async data => {
     try {
       setIsSubmitting(true);
-      setErrorMessage(null);
-      setSuccessMessage(null);
 
       const response = await publicAxios.post('/auth/login', {
         email: data.email,
@@ -231,8 +228,7 @@ const LoginScreen = ({ navigation }) => {
       }, 1000);
     } catch (error) {
       setIsSubmitting(false);
-      setErrorMessage(error.response.data.message);
-      setSuccessMessage(null);
+      invalidLoginAlert(error.response.data.message);
     }
   };
 
@@ -240,9 +236,11 @@ const LoginScreen = ({ navigation }) => {
     setPasswordHidden(!passwordHidden);
   };
 
-  useEffect(() => {
-    console.log(authContext?.authState);
-  });
+  const invalidLoginAlert = message => {
+    Alert.alert(message, '', [
+      { text: 'Close', onPress: () => console.log('Close alert') },
+    ]);
+  };
 
   return (
     <Wrapper

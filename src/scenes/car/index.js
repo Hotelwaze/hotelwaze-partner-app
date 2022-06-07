@@ -7,10 +7,10 @@ const Wrapper = styled.SafeAreaView`
   background-color: #ffffff;
 `;
 
-const BookingsScreen = () => (
+const CarScreen = () => (
   <Wrapper>
-    <Text>Bookings Screen</Text>
+    <Text>Car Screen</Text>
   </Wrapper>
 );
 
-export default BookingsScreen;
+export default CarScreen;

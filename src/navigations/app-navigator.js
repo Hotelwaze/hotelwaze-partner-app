@@ -1,25 +1,25 @@
 import React from 'react';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import CarsScreen from '../scenes/cars';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import CarsNavigator from './cars-navigator';
 import BookingsScreen from '../scenes/bookings';
 import DashboardScreen from '../scenes/dashboard';
 import DriversScreen from '../scenes/drivers';
-import {FontAwesomeIcon} from '@fortawesome/react-native-fontawesome';
+import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import LogoTitle from '../components/logo-title';
 
 const Tab = createBottomTabNavigator();
 
 const AppNavigator = () => (
   <Tab.Navigator
-    screenOptions={({route}) => ({
-      tabBarIcon: ({focused, color, size}) => {
+    screenOptions={({ route }) => ({
+      tabBarIcon: ({ focused, color, size }) => {
         let iconName;
 
         if (route.name === 'Dashboard') {
           iconName = 'gauge';
         } else if (route.name === 'Bookings') {
           iconName = 'calendar-lines-pen';
-        } else if (route.name === 'Cars') {
+        } else if (route.name === 'CarsStack') {
           iconName = 'cars';
         } else if (route.name === 'Drivers') {
           iconName = 'people-group';
@@ -60,17 +60,11 @@ const AppNavigator = () => (
       }}
     />
     <Tab.Screen
-      name="Cars"
-      component={CarsScreen}
+      name="CarsStack"
+      component={CarsNavigator}
       options={{
-        title: 'My Cars',
-        tabBarLabel: 'Cars',
-        headerTitleStyle: {
-          fontFamily: 'Montserrat-SemiBold',
-          fontSize: 18,
-          lineHeight: 22,
-          color: '#262626',
-        },
+        tabBarLabel: 'My Cars',
+        headerShown: false,
       }}
     />
     <Tab.Screen
